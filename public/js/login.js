@@ -22,18 +22,18 @@ document.addEventListener("DOMContentLoaded", () => {
         },
       })
       .then((response) => {
+        loginStatus.innerHTML = `
+            <p>${response.data.message}</p>
+        `;
         alert("User Logged in successfully");
         console.log(response.data);
-        loginStatus.innerHTML = `
-            <p>${response.message}</p>
-        `;
       })
       .catch((err) => {
+        loginStatus.innerHTML = `
+              <p>${err}</p>
+          `;
         alert("Error logging in user");
         console.log(err);
-        loginStatus.innerHTML = `
-            <p>${response.message}</p>
-        `;
       });
   }
 });
