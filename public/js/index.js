@@ -28,6 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
         signUpStatus.innerHTML = `
                 <p class='text-primary'>User signed up successfully</p>
             `;
+        signUpForm.reset();
       })
       .catch((err) => {
         console.log(err);

@@ -1,14 +1,16 @@
 const path = require("path");
+const bcrypt = require("bcrypt");
 
 const User = require("../models/userModel");
 exports.postUser = async (req, res) => {
   const { name, email, password } = req.body;
 
   try {
+    const hashedPassword = await bcrypt.hash(password, 10);
     const user = await User.create({
       name: name,
       email: email,
-      password: password,
+      password: hashedPassword,
     });
     res.status(201).json("User created successfully");
   } catch (err) {
@@ -26,7 +28,8 @@ exports.postLogin = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    if (user.password !== password) {
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
       return res.status(401).json({ message: "Invalid password" });
     }
 
