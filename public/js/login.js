@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
         alert("User Logged in successfully");
         console.log(response.data);
+        window.location.href = "../../views/dailyExpenses.html";
       })
       .catch((err) => {
         loginStatus.innerHTML = `

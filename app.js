@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 
 const userRoutes = require("./routes/users");
+const expenseRoutes = require("./routes/expenses");
 
 const rootDir = require("./util/path");
 
@@ -19,6 +20,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use("/users", userRoutes);
+app.use("/expenses", expenseRoutes);
 
 sequelize
   .sync()
