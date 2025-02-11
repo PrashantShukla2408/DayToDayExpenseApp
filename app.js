@@ -12,6 +12,9 @@ const rootDir = require("./util/path");
 
 const sequelize = require("./util/database");
 
+const User = require("./models/userModel");
+const Expense = require("./models/expenseModel");
+
 const app = express();
 
 app.use(express.static(path.join(__dirname, "public")));
@@ -21,6 +24,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use("/users", userRoutes);
 app.use("/expenses", expenseRoutes);
+
+User.hasMany(Expense);
+Expense.belongsTo(User);
 
 sequelize
   .sync()

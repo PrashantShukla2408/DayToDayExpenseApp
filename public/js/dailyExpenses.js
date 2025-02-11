@@ -15,10 +15,13 @@ document.addEventListener("DOMContentLoaded", () => {
       category: category,
     };
 
+    const token = localStorage.getItem("token");
+
     axios
       .post("http://localhost:5000/expenses/addExpense", expenseData, {
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
@@ -33,18 +36,25 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function getExpenses() {
-    axios.get("http://localhost:5000/expenses/getExpenses").then((response) => {
-      const expenses = response.data;
-      expenses.forEach((expense) => {
-        const expenseDiv = document.createElement("div");
-        expenseDiv.classList.add("expenseItem");
-        expenseDiv.innerHTML = `
+    const token = localStorage.getItem("token");
+    axios
+      .get("http://localhost:5000/expenses/getExpenses", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        const expenses = response.data;
+        expenses.forEach((expense) => {
+          const expenseDiv = document.createElement("div");
+          expenseDiv.classList.add("expenseItem");
+          expenseDiv.innerHTML = `
                     <p>${expense.amount} - ${expense.description} - ${expense.category}</p>
                     <button onclick="deleteExpense(${expense.expenseId})">Delete</button
                 `;
-        expenseList.appendChild(expenseDiv);
+          expenseList.appendChild(expenseDiv);
+        });
       });
-    });
   }
 
   function deleteExpense(expenseId) {
