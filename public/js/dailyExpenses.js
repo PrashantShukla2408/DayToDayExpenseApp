@@ -1,4 +1,22 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+  const token = localStorage.getItem("token");
+  const response = await axios.get("http://localhost:5000/users/userStatus", {
+    headers: {
+      "content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const data = await response.data;
+  if (data.isPremiumUser) {
+    alert("You are a premium user");
+    const premiumMessage = document.createElement("div");
+    premiumMessage.textContent = "You are a premium user!";
+    premiumMessage.style.color = "gold";
+    premiumMessage.style.fontSize = "20px";
+    document.body.prepend(premiumMessage);
+  }
+
   const expenseForm = document.getElementById("expenseForm");
   const expenseList = document.getElementById("expenseList");
   expenseForm.addEventListener("submit", handleFormSubmit);
@@ -58,8 +76,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function deleteExpense(expenseId) {
+    const token = localStorage.getItem("token");
+
     axios
-      .delete(`http://localhost:5000/expenses/deleteExpense/${expenseId}`)
+      .delete(`http://localhost:5000/expenses/deleteExpense/${expenseId}`, {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         console.log(response.data);
         alert("Expense deleted successfully");

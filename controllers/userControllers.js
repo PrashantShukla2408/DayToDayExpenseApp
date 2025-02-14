@@ -42,3 +42,13 @@ exports.postLogin = async (req, res) => {
     res.status(500).json({ message: "Error logging in", err });
   }
 };
+
+exports.getUserStatus = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const user = await User.findByPk(userId);
+    res.json({ isPremiumUser: user.isPremium });
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching user status", error });
+  }
+};

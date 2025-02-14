@@ -21,9 +21,12 @@ exports.postExpense = async (req, res) => {
 
 exports.deleteExpense = async (req, res) => {
   const expenseId = req.params.expenseId;
+  const userId = req.userId;
 
   try {
-    const expense = await Expense.findByPk(expenseId);
+    const expense = await Expense.findOne({
+      where: { expenseId: expenseId, UserId: userId },
+    });
     if (expense) {
       await expense.destroy();
       res.status(200).json({ message: "Expense deleted successfully" });

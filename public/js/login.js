@@ -31,8 +31,10 @@ document.addEventListener("DOMContentLoaded", () => {
         window.location.href = "../../views/dailyExpenses.html";
       })
       .catch((err) => {
+        const errorMessage =
+          err.response?.data?.message || "Something went wrong. Try again"; // ?. optional chaining
         loginStatus.innerHTML = `
-              <p>${err}</p>
+              <p>${errorMessage}</p>
           `;
         alert("Error logging in user");
         console.log(err);

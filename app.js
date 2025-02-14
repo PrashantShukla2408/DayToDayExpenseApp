@@ -7,6 +7,7 @@ const cors = require("cors");
 
 const userRoutes = require("./routes/users");
 const expenseRoutes = require("./routes/expenses");
+const paymentRoutes = require("./routes/payments");
 
 const rootDir = require("./util/path");
 
@@ -24,6 +25,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use("/users", userRoutes);
 app.use("/expenses", expenseRoutes);
+app.use(paymentRoutes);
 
 User.hasMany(Expense);
 Expense.belongsTo(User);
