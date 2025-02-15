@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const User = require("../models/userModel");
+const Expense = require("../models/expenseModel");
 exports.postUser = async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -50,5 +51,17 @@ exports.getUserStatus = async (req, res) => {
     res.json({ isPremiumUser: user.isPremium });
   } catch (error) {
     res.status(500).json({ message: "Error fetching user status", error });
+  }
+};
+
+exports.getLeaderboard = async (req, res) => {
+  try {
+    const leaderboardofUsers = await User.findAll({
+      attributes: ["id", "name", "totalExpense"],
+      order: [["totalExpense", "DESC"]],
+    });
+    res.json(leaderboardofUsers);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching leaderboard", error });
   }
 };

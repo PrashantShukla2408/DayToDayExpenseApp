@@ -8,6 +8,7 @@ const cors = require("cors");
 const userRoutes = require("./routes/users");
 const expenseRoutes = require("./routes/expenses");
 const paymentRoutes = require("./routes/payments");
+const premiumroutes = require("./routes/premiums");
 
 const rootDir = require("./util/path");
 
@@ -26,6 +27,7 @@ app.use(cors());
 app.use("/users", userRoutes);
 app.use("/expenses", expenseRoutes);
 app.use(paymentRoutes);
+app.use("/premium", premiumroutes);
 
 User.hasMany(Expense);
 Expense.belongsTo(User);

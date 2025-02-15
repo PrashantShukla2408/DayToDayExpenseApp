@@ -15,6 +15,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     premiumMessage.style.color = "gold";
     premiumMessage.style.fontSize = "20px";
     document.body.prepend(premiumMessage);
+
+    const leaderboardButton = document.createElement("button");
+    leaderboardButton.textContent = "Leaderboard";
+    document.body.appendChild(leaderboardButton);
+    leaderboardButton.addEventListener("click", getLeaderboard);
   }
 
   const expenseForm = document.getElementById("expenseForm");
@@ -95,6 +100,28 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
   }
   window.deleteExpense = deleteExpense;
+
+  async function getLeaderboard() {
+    const token = localStorage.getItem("token");
+    const response = await axios.get(
+      "http://localhost:5000/premium/leaderboard",
+      {
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    const leaderboard = response.data;
+    const leaderboardDiv = document.createElement("div");
+    leaderboardDiv.innerHTML = `<h2>Leaderboard</h2>`;
+    leaderboard.forEach((user) => {
+      const userDiv = document.createElement("div");
+      userDiv.innerHTML = `<p>${user.name} - ${user.totalExpense}</p>`;
+      leaderboardDiv.appendChild(userDiv);
+    });
+    document.body.appendChild(leaderboardDiv);
+  }
 
   getExpenses();
 });

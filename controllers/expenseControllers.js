@@ -1,5 +1,6 @@
 const path = require("path");
 
+const User = require("../models/userModel");
 const Expense = require("../models/expenseModel");
 
 exports.postExpense = async (req, res) => {
@@ -13,6 +14,21 @@ exports.postExpense = async (req, res) => {
       category: category,
       UserId: userId,
     });
+
+    const user = await User.findByPk(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    const totalExpense = user.totalExpense + amount;
+    await User.update(
+      {
+        totalExpense: totalExpense,
+      },
+      {
+        where: { id: userId },
+      }
+    );
+
     res.status(201).json(expense);
   } catch (err) {
     res.status(500).json({ message: "Error saving expense: ", err });
