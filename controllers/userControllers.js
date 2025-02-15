@@ -1,9 +1,17 @@
 const path = require("path");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const sibApiV3Sdk = require("sib-api-v3-sdk");
+const crypto = require("crypto");
+const { Op } = require("sequelize");
 
 const User = require("../models/userModel");
 const Expense = require("../models/expenseModel");
+const ForgotPassword = require("../models/forgotPasswordModel");
+
+const apiInstance = new sibApiV3Sdk.TransactionalEmailsApi();
+const apiKey = sibApiV3Sdk.ApiClient.instance.authentications["api-key"];
+apiKey.apiKey = process.env.BREVO_API_KEY;
 exports.postUser = async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -63,5 +71,67 @@ exports.getLeaderboard = async (req, res) => {
     res.json(leaderboardofUsers);
   } catch (error) {
     res.status(500).json({ message: "Error fetching leaderboard", error });
+  }
+};
+
+exports.forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ where: { email: email } });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    const resetToken = crypto.randomBytes(32).toString("hex");
+    const resetTokenExpiry = Date.now() + 3600000;
+
+    await ForgotPassword.create({
+      userId: user.id,
+      token: resetToken,
+      expiry: resetTokenExpiry,
+    });
+
+    const resetUrl = `http://localhost:5000/password/resetPassword/${resetToken}`;
+    const sendSmtpEmail = new sibApiV3Sdk.SendSmtpEmail();
+    sendSmtpEmail.to = [{ email: user.email }];
+    sendSmtpEmail.sender = {
+      email: "prashantshukla1999@gmail.com",
+      name: "Prashant",
+    };
+    sendSmtpEmail.subject = "Reset Password";
+    sendSmtpEmail.htmlContent = `
+    <p>Click on the link below to reset your password</p>
+    <a href="${resetUrl}">Reset password</a>`;
+    await apiInstance.sendTransacEmail(sendSmtpEmail);
+    res.status(200).json({ message: "Reset link sent to email" });
+  } catch (error) {
+    res.status(500).json({ message: "Error sending reset link", error });
+  }
+};
+
+exports.resetPassword = async (req, res) => {
+  try {
+    const resetToken = req.params.resetToken;
+    const { password } = req.body;
+
+    const resetTokenData = await ForgotPassword.findOne({
+      where: { token: resetToken, expiry: { [Op.gt]: Date.now() } },
+    });
+
+    if (!resetTokenData) {
+      return res.status(404).json({ message: "Token invalid or expired" });
+    }
+
+    const user = await User.findByPk(resetTokenData.userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    const hashedPassword = await bcrypt.hash(password, 10);
+    user.password = hashedPassword;
+    await user.save();
+
+    await resetTokenData.destroy();
+    res.status(200).json({ message: "Password reset successful" });
+  } catch (error) {
+    res.status(500).json({ message: "Error resetting password", error });
   }
 };

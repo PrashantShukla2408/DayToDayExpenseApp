@@ -1,8 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.getElementById("loginForm");
   const loginStatus = document.getElementById("loginStatus");
+  const forgotButton = document.getElementById("forgotButton");
 
   loginForm.addEventListener("submit", handleFormSubmit);
+  forgotButton.addEventListener("click", () => {
+    window.location.href = "../../views/forgotPasswordPage.html";
+  });
 
   function handleFormSubmit(event) {
     event.preventDefault();

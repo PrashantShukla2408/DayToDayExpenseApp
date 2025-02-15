@@ -9,6 +9,7 @@ const userRoutes = require("./routes/users");
 const expenseRoutes = require("./routes/expenses");
 const paymentRoutes = require("./routes/payments");
 const premiumroutes = require("./routes/premiums");
+const passwordRoutes = require("./routes/passwords");
 
 const rootDir = require("./util/path");
 
@@ -20,7 +21,7 @@ const Expense = require("./models/expenseModel");
 const app = express();
 
 app.use(express.static(path.join(__dirname, "public")));
-app.use(express.static(path.join(__dirname, "views")));
+// app.use(express.static(path.join(__dirname, "views")));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
@@ -28,6 +29,11 @@ app.use("/users", userRoutes);
 app.use("/expenses", expenseRoutes);
 app.use(paymentRoutes);
 app.use("/premium", premiumroutes);
+app.use("/password", passwordRoutes);
+
+app.get("/password/resetPassword/:resetToken", (req, res) => {
+  res.sendFile(path.join(__dirname, "views", "resetPassword.html"));
+});
 
 User.hasMany(Expense);
 Expense.belongsTo(User);
