@@ -36,6 +36,21 @@
 
     <div id="expenseList"></div>
 
+    <form id="rowsForm">
+        <label for="rowsPerPage">Rows per page: </label>
+        <select id="rowsPerPage" name="rowsPerPage">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="100">100</option>
+        </select>
+        <button type="submit">Submit rows</button>
+    </form>
+
+    <nav aria-label="Expenses pagination">
+        <ul class="pagination justify-content-center" id="expensesPagination"></ul>
+    </nav>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.8/axios.min.js"
         integrity="sha512-v8+bPcpk4Sj7CKB11+gK/FnsbgQ15jTwZamnBf/xDmiQDcgOIYufBo6Acu1y30vrk8gg5su4x0CG3zfPaq5Fcg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>

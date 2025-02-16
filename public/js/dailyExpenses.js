@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
   const token = localStorage.getItem("token");
+
   const response = await axios.get("http://localhost:5000/users/userStatus", {
     headers: {
       "content-Type": "application/json",
@@ -31,6 +32,18 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const expenseForm = document.getElementById("expenseForm");
   const expenseList = document.getElementById("expenseList");
+
+  const rowsForm = document.getElementById("rowsForm");
+  rowsForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const rows = parseInt(document.getElementById("rowsPerPage").value);
+    localStorage.setItem("rowsPerPage", rows);
+    getExpenses(1, rows);
+  });
+
+  const expensesPagination = document.getElementById("expensesPagination"); // pagination
+  const itemsPerPage = parseInt(localStorage.getItem("rowsPerPage")) || 5;
+
   expenseForm.addEventListener("submit", handleFormSubmit);
 
   function handleFormSubmit(event) {
@@ -65,26 +78,59 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
   }
 
-  function getExpenses() {
-    const token = localStorage.getItem("token");
-    axios
-      .get("http://localhost:5000/expenses/getExpenses", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        const expenses = response.data;
-        expenses.forEach((expense) => {
-          const expenseDiv = document.createElement("div");
-          expenseDiv.classList.add("expenseItem");
-          expenseDiv.innerHTML = `
-                    <p>${expense.amount} - ${expense.description} - ${expense.category}</p>
-                    <button onclick="deleteExpense(${expense.expenseId})">Delete</button
-                `;
-          expenseList.appendChild(expenseDiv);
-        });
+  async function getExpenses(page = 1, limit = itemsPerPage) {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/expenses/getExpenses?page=${page}&limit=${itemsPerPage}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data = response.data;
+      displayExpenses(data.items);
+      setupPagination(expensesPagination, data.totalPages, page, getExpenses);
+    } catch (error) {
+      console.log("Error fetching expenses: ", error);
+    }
+  }
+
+  function displayExpenses(data) {
+    expenseList.innerHTML = "";
+    data.forEach((item) => {
+      const expenseItem = document.createElement("div");
+      expenseItem.classList.add("expense-item");
+      expenseItem.innerHTML = `
+        <p> ${item.amount} - ${item.description} -${item.category}</p>
+      `;
+      expenseList.appendChild(expenseItem);
+    });
+  }
+
+  function setupPagination(
+    paginationElement,
+    totalPages,
+    currentPage,
+    fetchDataFunction
+  ) {
+    paginationElement.innerHTML = "";
+    for (let i = 1; i <= totalPages; i++) {
+      const pageItem = document.createElement("li");
+      pageItem.classList.add("page-item");
+      if (i === currentPage) {
+        pageItem.classList.add("active");
+      }
+      const pageLink = document.createElement("a");
+      pageLink.classList.add("page-link");
+      pageLink.href = "#";
+      pageLink.textContent = i;
+      pageLink.addEventListener("click", () => {
+        fetchDataFunction(i, itemsPerPage);
       });
+      pageItem.appendChild(pageLink);
+      paginationElement.appendChild(pageItem);
+    }
   }
 
   function deleteExpense(expenseId) {

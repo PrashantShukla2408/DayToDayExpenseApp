@@ -1,6 +1,7 @@
 const path = require("path");
 
 const sequelize = require("../util/database");
+const { Op } = require("../util/database");
 
 const User = require("../models/userModel");
 const Expense = require("../models/expenseModel");
@@ -78,14 +79,26 @@ exports.deleteExpense = async (req, res) => {
   }
 };
 
-exports.getExpenses = (req, res) => {
-  const userId = req.userId;
-  Expense.findAll({ where: { userId } })
-    .then((expenses) => {
-      console.log(expenses);
-      res.status(200).json(expenses);
-    })
-    .catch((err) => {
-      res.status(500).json({ message: "Error fetching expenses", err });
+exports.getExpenses = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 5;
+    const offset = (page - 1) * limit;
+
+    const { count, rows } = await Expense.findAndCountAll({
+      where: {
+        UserId: userId,
+      },
+      limit,
+      offset,
     });
+    const totalPages = Math.ceil(count / limit);
+    res
+      .status(200)
+      .json({ items: rows, totalPages: totalPages, currentPage: page });
+  } catch (error) {
+    console.log("Error fetching expenses:", error);
+    res.status(500).json({ message: "Error fetching expenses" });
+  }
 };

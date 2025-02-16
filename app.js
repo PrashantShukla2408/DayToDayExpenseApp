@@ -10,6 +10,7 @@ const expenseRoutes = require("./routes/expenses");
 const paymentRoutes = require("./routes/payments");
 const premiumroutes = require("./routes/premiums");
 const passwordRoutes = require("./routes/passwords");
+const reportRoutes = require("./routes/reports");
 
 const rootDir = require("./util/path");
 
@@ -30,6 +31,7 @@ app.use("/expenses", expenseRoutes);
 app.use(paymentRoutes);
 app.use("/premium", premiumroutes);
 app.use("/password", passwordRoutes);
+app.use(reportRoutes);
 
 app.get("/password/resetPassword/:resetToken", (req, res) => {
   res.sendFile(path.join(__dirname, "views", "resetPassword.html"));
