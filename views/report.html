@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report</title>
+    <link rel="stylesheet" href="../public/css/styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+
+<body class="p-5">
+    <h3 class="text-center">Day To Day Expenses</h3>
+    <p id="date" class="text-primary"></p>
+
+    <h5 id="month" class="text-center"></h5>
+    <div class="dailyExpenseContainer">
+        <h4 class="text-center">Daily Expenses</h4>
+        <table class="table table-primary table-striped table-bordered mt-3" id="dailyExpenseTable">
+            <thead>
+                <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Amount</th>
+                </tr>
+            </thead>
+            <tbody id="dailyData">
+
+            </tbody>
+        </table>
+        <div>
+            <h5 class="float-end me-5">Total: </h5>
+            <div id="dailyTotal"></div>
+        </div>
+
+        <div class="text-center">
+            <canvas id="dailyChart">
+
+            </canvas>
+        </div>
+    </div>
+
+    <div class="weeklyExpenseContainer">
+        <h4 class="text-center">Weekly Expenses</h4>
+        <table class="table table-primary table-striped table-bordered mt-3" id="weeklyExpenseTable">
+            <thead>
+                <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Amount</th>
+                </tr>
+            </thead>
+            <tbody id="weeklyData">
+
+            </tbody>
+        </table>
+        <div>
+            <h5 class="float-end me-5">Total:</h5>
+            <div class="weeklyTotal"></div>
+        </div>
+        <div>
+            <div class="text-center">
+                <canvas id="weeklyChart">
+
+                </canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="monthlyExpenseContainer">
+        <h4 class="text-center">Monthly Expenses</h4>
+        <table class="table table-primary table-striped table-bordered mt-3" id="MonthlyExpenseTable">
+            <thead>
+                <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Amount</th>
+                </tr>
+            </thead>
+            <tbody id="monthlyData">
+
+            </tbody>
+        </table>
+        <div>
+            <h5 class="float-end me-5">Total: </h5>
+            <div id="monthlyTotal"></div>
+        </div>
+
+        <div class="text-center">
+            <canvas id="monthlyChart">
+
+            </canvas>
+        </div>
+    </div>
+
+    <div class="text-center my-5">
+        <button class="text-center" id="downloadButton">Download Statement</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.8/axios.min.js"
+        integrity="sha512-v8+bPcpk4Sj7CKB11+gK/FnsbgQ15jTwZamnBf/xDmiQDcgOIYufBo6Acu1y30vrk8gg5su4x0CG3zfPaq5Fcg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="../public/js/report.js"></script>
+</body>
+
+</html>

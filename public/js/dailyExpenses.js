@@ -20,6 +20,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     leaderboardButton.textContent = "Leaderboard";
     document.body.appendChild(leaderboardButton);
     leaderboardButton.addEventListener("click", getLeaderboard);
+
+    const reportButton = document.createElement("button");
+    reportButton.textContent = "View Report";
+    document.body.appendChild(reportButton);
+    reportButton.addEventListener("click", async () => {
+      window.location.href = "../../views/report.html";
+    });
   }
 
   const expenseForm = document.getElementById("expenseForm");
