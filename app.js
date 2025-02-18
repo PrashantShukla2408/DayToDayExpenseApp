@@ -52,8 +52,6 @@ Expense.belongsTo(User);
 User.hasMany(Download);
 Download.belongsTo(User);
 
-console.log(process.env.NODE_ENV);
-
 sequelize
   .sync()
   .then((result) => {
