@@ -47,7 +47,7 @@ exports.postExpense = async (req, res) => {
 
 exports.deleteExpense = async (req, res) => {
   const t = await sequelize.transaction();
-  const expenseId = req.params.expenseId;
+  const expenseId = req.params.id;
   const userId = req.userId;
 
   try {
@@ -76,6 +76,46 @@ exports.deleteExpense = async (req, res) => {
   } catch (err) {
     console.log("Error deleting expense");
     res.status(500).json({ message: "Error deleting expense:", err });
+  }
+};
+
+exports.getExpense = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const expenseId = req.params.id;
+    const expense = await Expense.findOne({
+      where: { UserId: userId, expenseId: expenseId },
+    });
+    if (!expense) {
+      return res.status(404).json({ message: "Expense not found" });
+    }
+
+    res.status(200).json(expense);
+  } catch (error) {
+    console.log("Error fetching expense:", error);
+    res.status(500).json({ message: "Error fetching expense" });
+  }
+};
+
+exports.editExpense = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const expenseId = req.params.id;
+    const { amount, description, category } = req.body;
+    const expense = await Expense.findOne({
+      where: { UserId: userId, expenseId: expenseId },
+    });
+    if (!expense) {
+      return res.status(404).json({ message: "Expense not found" });
+    }
+    expense.amount = amount;
+    expense.description = description;
+    expense.category = category;
+    await expense.save();
+    res.status(200).json({ message: "Expense updated successfully" });
+  } catch (error) {
+    console.log("Error updating expense:", error);
+    res.status(500).json({ message: "Error updating expense" });
   }
 };
 

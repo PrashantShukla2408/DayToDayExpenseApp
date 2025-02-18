@@ -3,7 +3,9 @@ require("dotenv").config();
 
 const express = require("express");
 const bodyParser = require("body-parser");
+const fs = require("fs");
 const cors = require("cors");
+const morgan = require("morgan");
 
 const userRoutes = require("./routes/users");
 const expenseRoutes = require("./routes/expenses");
@@ -18,9 +20,16 @@ const sequelize = require("./util/database");
 
 const User = require("./models/userModel");
 const Expense = require("./models/expenseModel");
+const Download = require("./models/downloadModel");
 
 const app = express();
 
+const accessLogStream = fs.createWriteStream(
+  path.join(__dirname, "access.log"),
+  { flags: "a" }
+);
+
+app.use(morgan("combined", { stream: accessLogStream }));
 app.use(express.static(path.join(__dirname, "public")));
 // app.use(express.static(path.join(__dirname, "views")));
 app.use(bodyParser.json());
@@ -40,11 +49,16 @@ app.get("/password/resetPassword/:resetToken", (req, res) => {
 User.hasMany(Expense);
 Expense.belongsTo(User);
 
+User.hasMany(Download);
+Download.belongsTo(User);
+
+console.log(process.env.NODE_ENV);
+
 sequelize
   .sync()
   .then((result) => {
     console.log(result);
-    app.listen(5000, () => {
+    app.listen(process.env.PORT || 3000, () => {
       console.log("Server is running successfully");
     });
   })

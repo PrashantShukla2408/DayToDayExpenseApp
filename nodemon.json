@@ -1,0 +1,13 @@
+{
+    "env":{
+        "DB_NAME":"expense",
+        "DB_USER":"root",
+        "DB_PASSWORD":"Qwerty@123456",
+        "DB_HOST":"localhost",
+        "JWT_SECRETKEY":"15246c14c9974edd3b72e741d4979101eca5c26db28e6c9c038ee6691c6b3a9c6ad79b3558e11c136234a76879352d0e1b6b5bbdcf64f920d452710d812ea5d4",
+        "CASHFREE_APP_ID":"TEST1047571801ddccb3e71670addd3181757401",
+        "CASHFREE_SECRETKEY":"cfsk_ma_test_4576eddf0810ab382ee484f876a537f3_8557fbef",
+        "BREVO_API_KEY":"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",
+        "PORT":5000
+    }
+}

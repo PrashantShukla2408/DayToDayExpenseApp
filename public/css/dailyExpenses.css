@@ -1,0 +1,429 @@
+h3 {
+    background-color: #4eb69c;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    margin: 0,0,25px,0;
+    max-width: 100%;
+}
+
+@media (max-width: 768px) {
+    h3 {
+        font-size: 1.5rem;
+        padding: 10px;
+    }
+}
+
+@media (min-width: 769px) {
+    h3 {
+        max-width: 100%;
+    }
+}
+
+.card {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 300px;
+    position: fixed;
+    right: 20px;
+    top: 20%;
+    transform: translateY(-50%);
+    text-align: center;
+}
+
+.card h5 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+#payButton {
+    background-color: #4eb69c;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+    width: 100%;
+}
+
+#payButton:hover {
+    background-color: #3a9b86;
+}
+
+/* Styling for the Expense Form */
+#expenseForm {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 90%;
+    margin: 30px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#expenseForm label {
+    font-weight: bold;
+}
+
+#expenseForm input, 
+#expenseForm select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+#expenseForm button {
+    background-color: #4eb69c;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: 0.3s;
+}
+
+#expenseForm button:hover {
+    background-color: #3a9b86;
+}
+
+/* Styling for the Expense List */
+#expenseList {
+    max-width: 600px;
+    width: 90%;
+    margin: 20px auto;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.expense-item {
+    display: flex;
+    align-items: center; /* Align items vertically */
+    justify-content: space-between; /* Space between content and button */
+    background-color: white;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    gap: 10px; /* Add some spacing between elements */
+}
+
+.expense-item:nth-child(even) {
+    background-color: #f1f1f1;
+}
+
+.expense-item div {
+    flex: 1; /* Allows text content to take up available space */
+    word-break: break-word; /* Prevents text overflow */
+}
+
+.expense-item button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+    white-space: nowrap; /* Prevents button text from wrapping */
+}
+
+.expense-item button:hover {
+    background-color: #b02a37;
+}
+
+/* Styling for Rows Per Page Form */
+#rowsForm {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 90%;
+    margin: 20px auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+#rowsForm label {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+#rowsForm select {
+    width: 50%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#rowsForm button {
+    background-color: #4eb69c;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+#rowsForm button:hover {
+    background-color: #3a9b86;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #rowsForm {
+        flex-direction: column;
+        align-items: stretch;
+        width: 95%;
+    }
+
+    #rowsForm select {
+        width: 100%;
+    }
+
+    #rowsForm button {
+        width: 100%;
+    }
+}
+
+/* Styling for Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: 20px auto;
+    gap: 10px;
+}
+
+.pagination li {
+    display: inline;
+}
+
+.pagination li a {
+    display: inline-block;
+    padding: 8px 15px;
+    margin: 0 5px;
+    background-color: #ffffff;
+    color: #4eb69c;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.pagination li a:hover {
+    background-color: #4eb69c;
+    color: white;
+    border-color: #3a9b86;
+}
+
+/* Styling for the buttons */
+button {
+    background-color: #4eb69c;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 15px;
+    transition: 0.3s;
+    display: inline-block;
+}
+
+/* Hover effect for buttons */
+button:hover {
+    background-color: #3a9b86;
+}
+
+/* Styling for the Leaderboard Button */
+#leaderboardButton {
+    background-color: #5cb85c;
+}
+
+#leaderboardButton:hover {
+    background-color: #4cae4c;
+}
+
+/* Styling for the Report Button */
+#reportButton {
+    background-color: #f0ad4e;
+}
+
+#reportButton:hover {
+    background-color: #ec971f;
+}
+
+#downloadReportButton{
+    background-color: brown;
+}
+
+#downloadReportButton:hover{
+    background-color: rgb(124, 30, 30);
+}
+
+#downloadHistory{
+    background-color:blueviolet
+}
+
+#downloadHistory:hover{
+    background-color:rgb(92, 20, 160)
+}
+
+/* Styling for the leaderboard container */
+#leaderboardDiv {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 600px;
+    margin: 30px auto;
+}
+
+/* Styling for the leaderboard heading */
+#leaderboardDiv h2 {
+    text-align: center;
+    color: #4eb69c;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Styling for each user in the leaderboard */
+#leaderboardDiv div {
+    background-color: #f9f9f9;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#leaderboardDiv div:nth-child(even) {
+    background-color: #f1f1f1;
+}
+
+/* Highlighted total expense styling */
+#leaderboardDiv div p {
+    font-weight: bold;
+    color: #333;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    #leaderboardDiv {
+        width: 95%;
+        padding: 15px;
+    }
+
+    #leaderboardDiv h2 {
+        font-size: 20px;
+    }
+
+    #leaderboardDiv div {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
+
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    button {
+        font-size: 14px;
+        padding: 10px 15px;
+        margin: 10px;
+    }
+}
+
+body {
+    background-color: #ffffff;
+    transition:background-color 0.5s;
+}
+
+body.dark-mode {
+    background-color: #2c2c2c;
+    color: #f1f1f1;
+}
+
+body.dark-mode button {
+    background-color: #555;
+    color: #f1f1f1;
+}
+
+body.dark-mode button:hover {
+    background-color: #444;
+}
+
+/* Light Mode button styling */
+body.light-mode {
+    background-color: #ffffff;
+    color: #333;
+}
+
+body.light-mode button {
+    background-color: #4eb69c;
+    color: white;
+}
+
+body.light-mode button:hover {
+    background-color: #3a9b86;
+}
+
+
+
+
+/* Active Page St
+
+
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    #expenseForm {
+        width: 95%;
+        padding: 20px;
+    }
+
+    #expenseList {
+        width: 95%;
+    }
+}
+
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .card {
+        position: relative;
+        right: auto;
+        top: auto;
+        transform: none;
+        margin: 20px auto;
+        width: 90%;
+    }
+}

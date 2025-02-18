@@ -4,7 +4,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "start": "cross-env NODE_ENV=production node app.js",
+    "start-server": "node app.js",
+    "start:dev": "nodemon app.js"
   },
   "keywords": [],
   "author": "",
@@ -13,6 +15,7 @@
   "dependencies": {
     "@cashfreepayments/cashfree-js": "^1.0.5",
     "@getbrevo/brevo": "^2.2.0",
+    "aws-sdk": "^2.1692.0",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.3",
     "cashfree-pg": "^4.3.10",
@@ -20,11 +23,16 @@
     "crypto": "^1.0.1",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "fs": "^0.0.1-security",
     "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
     "mysql2": "^3.12.0",
     "nodemon": "^3.1.9",
     "sequelize": "^6.37.5",
     "shortid": "^2.2.17",
     "sib-api-v3-sdk": "^8.5.0"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
   }
 }
