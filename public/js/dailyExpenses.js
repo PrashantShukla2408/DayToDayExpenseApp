@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
   const token = localStorage.getItem("token");
+  const premiumCard = document.getElementById("premiumCard");
   const themeToggleBtn = document.getElementById("themeToggleBtn");
 
   const currentTheme = localStorage.getItem("theme") || "light";
@@ -35,6 +36,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const data = await response.data;
   if (data.isPremiumUser) {
     alert("You are a premium user");
+    premiumCard.style.display = "none";
     const premiumMessage = document.createElement("div");
     premiumMessage.textContent = "You are a premium user!";
     premiumMessage.style.color = "gold";
